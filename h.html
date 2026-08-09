@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Management System</title>
+
+    <style>
+
+        /* =========================
+           GLOBAL STYLING
+        ========================= */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+            /* Beautiful Gradient Background */
+            background: linear-gradient(
+                135deg,
+                #667eea,
+                #764ba2
+            );
+
+            min-height: 100vh;
+            color: #2d3748;
+        }
+
+
+        /* =========================
+           MAIN HEADING
+        ========================= */
+
+        h2 {
+            text-align: center;
+            color: white;
+            font-size: 32px;
+            margin-bottom: 30px;
+
+            text-shadow:
+                0 3px 10px rgba(0, 0, 0, 0.25);
+        }
+
+
+        /* =========================
+           MAIN CONTAINER
+        ========================= */
+
+        .container {
+            display: flex;
+            gap: 25px;
+
+            max-width: 1100px;
+            margin: auto;
+        }
+
+
+        /* =========================
+           CARDS
+        ========================= */
+
+        .form-section,
+        .table-section {
+
+            background: rgba(255, 255, 255, 0.96);
+
+            padding: 25px;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 15px 35px rgba(0, 0, 0, 0.20);
+
+            transition: 0.3s;
+        }
+
+
+        .form-section:hover,
+        .table-section:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 20px 40px rgba(0, 0, 0, 0.25);
+        }
+
+
+        .form-section {
+            flex: 1;
+        }
+
+
+        .table-section {
+            flex: 2;
+            overflow-x: auto;
+        }
+
+
+        /* =========================
+           SECTION HEADINGS
+        ========================= */
+
+        h3 {
+            margin-top: 0;
+
+            color: #4c51bf;
+
+            font-size: 21px;
+
+            border-bottom: 2px solid #e2e8f0;
+
+            padding-bottom: 12px;
+
+            margin-bottom: 20px;
+        }
+
+
+        /* =========================
+           LABELS
+        ========================= */
+
+        label {
+            display: block;
+
+            font-weight: 600;
+
+            color: #4a5568;
+
+            margin-top: 10px;
+        }
+
+
+        /* =========================
+           INPUT & SELECT
+        ========================= */
+
+        input,
+        select {
+
+            width: 100%;
+
+            padding: 12px 14px;
+
+            margin: 8px 0 15px;
+
+            border: 2px solid #e2e8f0;
+
+            border-radius: 10px;
+
+            font-size: 15px;
+
+            outline: none;
+
+            background-color: #f8fafc;
+
+            transition: 0.3s;
+        }
+
+
+        input:focus,
+        select:focus {
+
+            border-color: #667eea;
+
+            background-color: white;
+
+            box-shadow:
+                0 0 0 3px rgba(102, 126, 234, 0.15);
+        }
+
+
+        /* =========================
+           MAIN BUTTON
+        ========================= */
+
+        button {
+
+            width: 100%;
+
+            border: none;
+
+            padding: 12px;
+
+            border-radius: 10px;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+        }
+
+
+        /* Add Student Button */
+
+        #mainButton {
+
+            background: linear-gradient(
+                135deg,
+                #00b09b,
+                #96c93d
+            );
+
+            box-shadow:
+                0 5px 12px rgba(0, 176, 155, 0.25);
+        }
+
+
+        #mainButton:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 8px 18px rgba(0, 176, 155, 0.35);
+        }
+
+
+        /* Update Button */
+
+        .update-btn {
+
+            background: linear-gradient(
+                135deg,
+                #2196f3,
+                #21cbf3
+            ) !important;
+        }
+
+
+        /* =========================
+           TABLE
+        ========================= */
+
+        table {
+
+            width: 100%;
+
+            border-collapse: separate;
+
+            border-spacing: 0;
+
+            overflow: hidden;
+
+            border-radius: 12px;
+        }
+
+
+        /* Table Header */
+
+        th {
+
+            padding: 14px;
+
+            text-align: left;
+
+            color: white;
+
+            font-size: 14px;
+
+            background: linear-gradient(
+                135deg,
+                #667eea,
+                #764ba2
+            );
+        }
+
+
+        /* Table Data */
+
+        td {
+
+            padding: 13px;
+
+            border-bottom: 1px solid #edf2f7;
+
+            font-size: 14px;
+        }
+
+
+        /* Alternate Rows */
+
+        tbody tr:nth-child(even) {
+
+            background-color: #f8faff;
+        }
+
+
+        /* Hover Row */
+
+        tbody tr:hover {
+
+            background-color: #edf2ff;
+
+            transition: 0.2s;
+        }
+
+
+        /* =========================
+           ACTION BUTTONS
+        ========================= */
+
+        .action-buttons {
+
+            display: flex;
+
+            gap: 7px;
+        }
+
+
+        .action-buttons button {
+
+            width: auto;
+
+            padding: 7px 12px;
+
+            font-size: 13px;
+        }
+
+
+        /* Edit Button */
+
+        .edit-btn {
+
+            background: linear-gradient(
+                135deg,
+                #ffb347,
+                #ffcc33
+            );
+
+            color: #4a3500;
+        }
+
+
+        .edit-btn:hover {
+
+            transform: scale(1.05);
+
+            box-shadow:
+                0 4px 10px rgba(255, 179, 71, 0.35);
+        }
+
+
+        /* Delete Button */
+
+        .delete-btn {
+
+            background: linear-gradient(
+                135deg,
+                #ff416c,
+                #ff4b2b
+            );
+        }
+
+
+        .delete-btn:hover {
+
+            transform: scale(1.05);
+
+            box-shadow:
+                0 4px 10px rgba(255, 65, 108, 0.35);
+        }
+
+
+        /* =========================
+           CANCEL BUTTON
+        ========================= */
+
+        .cancel-btn {
+
+            background: #718096;
+
+            margin-top: 10px;
+
+            display: none;
+        }
+
+
+        .cancel-btn:hover {
+
+            background: #4a5568;
+        }
+
+
+        /* =========================
+           EMPTY TABLE MESSAGE
+        ========================= */
+
+        .empty-message {
+
+            text-align: center;
+
+            color: #718096;
+
+            padding: 25px;
+        }
+
+
+        /* =========================
+           RESPONSIVE DESIGN
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            body {
+                padding: 15px;
+            }
+
+            h2 {
+                font-size: 25px;
+            }
+
+            .container {
+
+                flex-direction: column;
+
+                gap: 20px;
+            }
+
+            .form-section,
+            .table-section {
+
+                width: 100%;
+            }
+        }
+
+
+        @media (max-width: 500px) {
+
+            th,
+            td {
+
+                padding: 9px;
+
+                font-size: 12px;
+            }
+
+            .action-buttons {
+
+                flex-direction: column;
+            }
+
+            .action-buttons button {
+
+                width: 100%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         PAGE TITLE
+    ========================== -->
+
+    <h2>🎓 Student Management System</h2>
+
+
+    <div class="container">
+
+
+        <!-- =========================
+             FORM SECTION
+        ========================== -->
+
+        <div class="form-section">
+
+            <h3 id="formTitle">
+                ➕ Add New Student
+            </h3>
+
+
+            <label>
+                Roll Number
+            </label>
+
+            <input
+                type="number"
+                id="rollNo"
+                placeholder="Enter Roll Number"
+            >
+
+
+            <label>
+                Student Name
+            </label>
+
+            <input
+                type="text"
+                id="name"
+                placeholder="Enter Student Name"
+            >
+
+
+            <label>
+                Course
+            </label>
+
+            <select id="course">
+
+                <option value="Choose Option">
+                    Option
+                </option>
+
+                <option value="B.Tech (IT)">
+                    B.Tech (IT)
+                </option>
+
+                <option value="B.Tech (CSE)">
+                    B.Tech (CSE)
+                </option>
+
+                <option value="BCA">
+                    BCA
+                </option>
+
+                <option value="MCA">
+                    MCA
+                </option>
+
+            </select>
+
+
+            <button
+                id="mainButton"
+                onclick="addStudent()"
+            >
+                ➕ Add Student
+            </button>
+
+
+            <button
+                class="cancel-btn"
+                id="cancelButton"
+                onclick="cancelEdit()"
+            >
+                ✖ Cancel Edit
+            </button>
+
+        </div>
+
+
+
+        <!-- =========================
+             TABLE SECTION
+        ========================== -->
+
+        <div class="table-section">
+
+            <h3>
+                📋 Student Records
+            </h3>
+
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Roll No
+                        </th>
+
+                        <th>
+                            Name
+                        </th>
+
+                        <th>
+                            Course
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="studentTableBody">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+
+    <script>
+
+        /* =========================
+           LOAD DATA
+        ========================== */
+
+        let students =
+            JSON.parse(
+                localStorage.getItem("students")
+            ) || [];
+
+
+        let editIndex = -1;
+
+
+
+        /* =========================
+           DISPLAY STUDENTS
+        ========================== */
+
+        function displayStudents() {
+
+            let tableBody =
+                document.getElementById(
+                    "studentTableBody"
+                );
+
+
+            tableBody.innerHTML = "";
+
+
+            if (students.length === 0) {
+
+                tableBody.innerHTML = `
+                    <tr>
+                        <td
+                            colspan="4"
+                            class="empty-message"
+                        >
+                            🎓 No student records found.
+                            <br>
+                            Add your first student!
+                        </td>
+                    </tr>
+                `;
+
+                return;
+            }
+
+
+            students.forEach(
+                (student, index) => {
+
+                    let row = `
+
+                        <tr>
+
+                            <td>
+                                ${student.rollNo}
+                            </td>
+
+                            <td>
+                                ${student.name}
+                            </td>
+
+                            <td>
+                                ${student.course}
+                            </td>
+
+                            <td>
+
+                                <div
+                                    class="action-buttons"
+                                >
+
+                                    <button
+                                        class="edit-btn"
+                                        onclick="editStudent(${index})"
+                                    >
+                                        ✏️ Edit
+                                    </button>
+
+
+                                    <button
+                                        class="delete-btn"
+                                        onclick="deleteStudent(${index})"
+                                    >
+                                        🗑️ Delete
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+
+                    tableBody.innerHTML += row;
+
+                }
+            );
+
+        }
+
+
+
+        /* =========================
+           ADD STUDENT
+        ========================== */
+
+        function addStudent() {
+
+            let rollNo =
+                document.getElementById(
+                    "rollNo"
+                ).value;
+
+            let name =
+                document.getElementById(
+                    "name"
+                ).value;
+
+            let course =
+                document.getElementById(
+                    "course"
+                ).value;
+
+
+            if (
+                rollNo === "" ||
+                name.trim() === ""
+            ) {
+
+                alert(
+                    "⚠️ Please fill all details!"
+                );
+
+                return;
+            }
+
+
+            students.push({
+
+                rollNo: rollNo,
+
+                name: name,
+
+                course: course
+
+            });
+
+
+            localStorage.setItem(
+                "students",
+                JSON.stringify(students)
+            );
+
+
+            clearForm();
+
+            displayStudents();
+
+        }
+
+
+
+        /* =========================
+           EDIT STUDENT
+        ========================== */
+
+        function editStudent(index) {
+
+            let student =
+                students[index];
+
+
+            document.getElementById(
+                "rollNo"
+            ).value =
+                student.rollNo;
+
+
+            document.getElementById(
+                "name"
+            ).value =
+                student.name;
+
+
+            document.getElementById(
+                "course"
+            ).value =
+                student.course;
+
+
+            editIndex = index;
+
+
+            document.getElementById(
+                "formTitle"
+            ).innerText =
+                "✏️ Update Student";
+
+
+            let mainButton =
+                document.getElementById(
+                    "mainButton"
+                );
+
+
+            mainButton.innerText =
+                "💾 Update Student";
+
+
+            mainButton.classList.add(
+                "update-btn"
+            );
+
+
+            mainButton.onclick =
+                updateStudent;
+
+
+            document.getElementById(
+                "cancelButton"
+            ).style.display =
+                "block";
+
+        }
+
+
+
+        /* =========================
+           UPDATE STUDENT
+        ========================== */
+
+        function updateStudent() {
+
+            let rollNo =
+                document.getElementById(
+                    "rollNo"
+                ).value;
+
+            let name =
+                document.getElementById(
+                    "name"
+                ).value;
+
+            let course =
+                document.getElementById(
+                    "course"
+                ).value;
+
+
+            if (
+                rollNo === "" ||
+                name.trim() === ""
+            ) {
+
+                alert(
+                    "⚠️ Please fill all details!"
+                );
+
+                return;
+            }
+
+
+            students[editIndex] = {
+
+                rollNo: rollNo,
+
+                name: name,
+
+                course: course
+
+            };
+
+
+            localStorage.setItem(
+                "students",
+                JSON.stringify(students)
+            );
+
+
+            alert(
+                "✅ Student updated successfully!"
+            );
+
+
+            cancelEdit();
+
+            displayStudents();
+
+        }
+
+
+
+        /* =========================
+           DELETE STUDENT
+        ========================== */
+
+        function deleteStudent(index) {
+
+            if (
+                confirm(
+                    "⚠️ Are you sure you want to delete this student?"
+                )
+            ) {
+
+                students.splice(
+                    index,
+                    1
+                );
+
+
+                localStorage.setItem(
+                    "students",
+                    JSON.stringify(students)
+                );
+
+
+                displayStudents();
+
+            }
+
+        }
+
+
+
+        /* =========================
+           CANCEL EDIT
+        ========================== */
+
+        function cancelEdit() {
+
+            editIndex = -1;
+
+
+            document.getElementById(
+                "formTitle"
+            ).innerText =
+                "➕ Add New Student";
+
+
+            let mainButton =
+                document.getElementById(
+                    "mainButton"
+                );
+
+
+            mainButton.innerText =
+                "➕ Add Student";
+
+
+            mainButton.classList.remove(
+                "update-btn"
+            );
+
+
+            mainButton.onclick =
+                addStudent;
+
+
+            document.getElementById(
+                "cancelButton"
+            ).style.display =
+                "none";
+
+
+            clearForm();
+
+        }
+
+
+
+        /* =========================
+           CLEAR FORM
+        ========================== */
+
+        function clearForm() {
+
+            document.getElementById(
+                "rollNo"
+            ).value = "";
+
+
+            document.getElementById(
+                "name"
+            ).value = "";
+
+
+            document.getElementById(
+                "course"
+            ).selectedIndex = 0;
+
+        }
+
+
+
+        /* =========================
+           PAGE LOAD
+        ========================== */
+
+        displayStudents();
+
+    </script>
+
+</body>
+
+</html>
